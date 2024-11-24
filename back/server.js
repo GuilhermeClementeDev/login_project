@@ -1,7 +1,9 @@
 import express from 'express'
 import { PrismaClient } from '@prisma/client'
-import { empty } from '@prisma/client/runtime/library'
+import cors from 'cors'
+
 const app = express()
+app.use(cors())
 const prisma = new PrismaClient()
 
 app.use(express.json())
@@ -65,9 +67,3 @@ app.delete('/users/:id', async (req, res) =>{
 })
 
 app.listen(3000)
-
-
-/*
-guizin
-DQlj5qaKl4DUrrKR
-*/

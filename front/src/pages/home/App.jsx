@@ -1,15 +1,20 @@
-import { useState, useSyncExternalStore } from 'react'
+import { useState, useEffect } from 'react'
 import './style.css'
+import api from '../../services/api.js'
 
 function App() {
-  const users = [
-    {
-      id: '1',
-      name: 'rodolfo',
-      age: 33,
-      email: 'teste@gmail.com'
-    }
-  ]
+  const [users, setUsers] = useState([])
+
+  async function getUsers(){
+    const usersFromApi = await api.get('/users')
+
+    setUsers(usersFromApi.data)
+    console.log(usersFromApi.data)
+  }
+
+  useEffect(() => {
+    getUsers()
+  }, [])
 
   return (
     <div className='container'>
@@ -22,12 +27,12 @@ function App() {
         <button type='button'>Cadastrar</button>
       </form>
 
-      {users.map((user) => (
-        <div key={user.id} className='cards'>
+      {users.map((users) => (
+        <div key={users.id} className='cards'>
          <div>
-            <p>Nome: <span>{user.name}/</span></p>
-           <p>Idade: <span>{user.age}</span></p>
-           <p>Email: <span>{user.email}</span></p>
+            <p>Nome: <span>{users.name}</span></p>
+           <p>Idade: <span>{users.age}</span></p>
+           <p>Email: <span>{users.email}</span></p>
           </div>
          <button>X</button>
         </div>
